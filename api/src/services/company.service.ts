@@ -11,3 +11,11 @@ export function deleteACompany(id: string) {
 export function getCompanyById(id: string) {
   return CompanyModel.findById(id).exec();
 }
+
+export function getAllCompanies() {
+  return CompanyModel.find({}).exec();
+}
+
+export function updateCompany(id: string, data: any) {
+  return CompanyModel.updateOne({ _id: id }, data).exec();
+}

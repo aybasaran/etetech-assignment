@@ -3,18 +3,23 @@ import {
   getLatest3Companies,
   deleteACompany,
   getCompanyById,
+  getAllCompanies,
+  updateCompany,
 } from "../services/company.service";
 
 // export async function createCompanyHandler(req: Request, res: Response) {}
 
-// export async function updateCompanyHandler(req: Request, res: Response) {}
-
-// export async function deleteCompanyHandler(req: Request, res: Response) {}
-
 export async function listCompaniesHandler(req: Request, res: Response) {
-  if (req.query.lm || req.query.srt) {
-    const companies = await getLatest3Companies();
-    res.status(200).json(companies);
+  try {
+    if (req.query.lm || req.query.srt) {
+      const companies = await getLatest3Companies();
+      res.status(200).json(companies);
+    } else {
+      const companies = await getAllCompanies();
+      res.status(200).json(companies);
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 }
 
@@ -22,9 +27,9 @@ export async function deleteCompanyHandler(req: Request, res: Response) {
   try {
     const { id } = req.params;
     await deleteACompany(id);
-    res.status(200).json({ message: "Company deleted successfully" });
+    res.status(200).json({ success: "Company deleted successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Something went wrong" });
+    res.status(500).json({ error: error.message });
   }
 }
 
@@ -34,6 +39,17 @@ export async function getCompanyByIdHandler(req: Request, res: Response) {
     const company = await getCompanyById(id);
     res.status(200).json(company);
   } catch (error) {
-    res.status(500).json({ message: "Something went wrong" });
+    res.status(500).json({ error: error.message });
+  }
+}
+
+export async function updateCompanyByIdHandler(req: Request, res: Response) {
+  try {
+    const { id } = req.params;
+    const data = req.body;
+    await updateCompany(id, data);
+    res.status(200).json({ success: "Company updated successfully" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 }

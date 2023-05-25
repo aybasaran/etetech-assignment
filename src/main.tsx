@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import CompanyDelete from "./pages/CompanyDelete";
 import CompanyEdit from "./pages/CompanyEdit";
+import Company from "./pages/Company";
 
 import "./index.css";
 
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/company",
+    element: <Company />,
   },
   {
     path: "/company/:id/delete",

@@ -7,7 +7,7 @@ const Header: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const linkStyle = clsx(
-    "bg-green-400 text-black px-2 py-1 rounded hover:bg-green-500"
+    "bg-green-400 text-sm font-semibold text-black px-4 py-2 rounded hover:bg-green-500"
   );
 
   return (
@@ -16,18 +16,14 @@ const Header: React.FC = () => {
         <div className="text-2xl font-bold">
           <Link to="/">EteTechnology</Link>
         </div>
-        <ul className="flex gap-2">
-          <li>
-            <Link to="/login" className={linkStyle}>
-              Login
-            </Link>
-          </li>
-          <li>
-            <Link to="/register" className={linkStyle}>
-              Register
-            </Link>
-          </li>
-        </ul>
+        <div className="flex gap-2 items-center">
+          <Link to="/company" className={linkStyle}>
+            Companies
+          </Link>
+          <Link to="/product" className={linkStyle}>
+            Products
+          </Link>
+        </div>
       </nav>
     </header>
   );

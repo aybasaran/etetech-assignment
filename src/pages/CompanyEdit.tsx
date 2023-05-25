@@ -13,12 +13,12 @@ const CompanyEdit: React.FC = function () {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const { data, isLoading, error } = useQuery(["company", id], () =>
+  const { data, isLoading } = useQuery(["company", id], () =>
     api.get(`/company/${id}`).then((res) => res.data)
   );
 
   const mutation = useMutation({
-    mutationFn: async (payload: any) => {
+    mutationFn: async (payload: unknown) => {
       const res = await api.put(`/company/${id}`, payload);
       return res.data;
     },

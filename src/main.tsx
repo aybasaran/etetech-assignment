@@ -13,6 +13,7 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import CompanyCreate from "./pages/CompanyCreate";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
   {
     path: "/company/:id/edit",
     element: <CompanyEdit />,
+  },
+  {
+    path: "/company/create",
+    element: <CompanyCreate />,
   },
 ]);
 

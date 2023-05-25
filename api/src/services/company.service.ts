@@ -16,6 +16,10 @@ export function getAllCompanies() {
   return CompanyModel.find({}).exec();
 }
 
-export function updateCompany(id: string, data: any) {
+export function updateCompany(id: string, data: unknown) {
   return CompanyModel.updateOne({ _id: id }, data).exec();
+}
+
+export function createCompany(data: unknown) {
+  return CompanyModel.create(data);
 }

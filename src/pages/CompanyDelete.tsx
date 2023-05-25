@@ -13,7 +13,7 @@ const CompanyDelete: React.FC = function () {
   const queryClient = useQueryClient();
   const { id } = useParams<{ id: string }>();
 
-  const { data, isLoading, error } = useQuery(["company", id], () =>
+  const { data, isLoading } = useQuery(["company", id], () =>
     api.get(`/company/${id}`).then((res) => res.data)
   );
 

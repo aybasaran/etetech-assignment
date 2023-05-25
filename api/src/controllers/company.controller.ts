@@ -5,6 +5,7 @@ import {
   getCompanyById,
   getAllCompanies,
   updateCompany,
+  createCompany,
 } from "../services/company.service";
 
 // export async function createCompanyHandler(req: Request, res: Response) {}
@@ -49,6 +50,16 @@ export async function updateCompanyByIdHandler(req: Request, res: Response) {
     const data = req.body;
     await updateCompany(id, data);
     res.status(200).json({ success: "Company updated successfully" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+export async function createCompanyHandler(req: Request, res: Response) {
+  try {
+    const data = req.body;
+    await createCompany(data);
+    res.status(200).json({ success: "Company created successfully" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

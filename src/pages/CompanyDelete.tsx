@@ -45,7 +45,7 @@ const CompanyDelete: React.FC = function () {
           <ArrowPathIcon className="animate-spin h-5 w-5 mr-3 ..." />
         </div>
       ) : (
-        <div className="max-w-2xl mx-auto flex flex-col gap-6">
+        <div className="max-w-2xl mx-auto flex flex-col gap-6 h-full justify-center">
           <h1 className="text-2xl">
             Are you sure you want to delete this company -{" "}
             <span className="font-bold">({data.company_name})</span> ?

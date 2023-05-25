@@ -12,9 +12,10 @@ import { Link } from "react-router-dom";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
 
 const Company: React.FC = () => {
-  const { data, isLoading, error } = useQuery(["companies", "all"], () =>
-    api.get("/company").then((res) => res.data)
-  );
+  const { data, isLoading } = useQuery(["companies", "all"], async () => {
+    const res = await api.get("/company");
+    return res.data;
+  });
 
   return (
     <Layout>

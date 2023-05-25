@@ -1,11 +1,16 @@
 import React from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import Layout from "../components/Layout";
-import api from "../api";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-
 import { ArrowPathIcon } from "@heroicons/react/24/solid";
+import toast, { Toaster } from "react-hot-toast";
+
+import Layout from "../components/Layout";
 import Button from "../components/Button";
+
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useParams, useNavigate } from "react-router-dom";
+
+import api from "../api";
+
+import sleep from "../utils/sleep";
 
 const CompanyEdit: React.FC = function () {
   const { id } = useParams<{ id: string }>();
@@ -13,21 +18,32 @@ const CompanyEdit: React.FC = function () {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const { data, isLoading } = useQuery(["company", id], () =>
-    api.get(`/company/${id}`).then((res) => res.data)
-  );
+  const { data, isLoading } = useQuery(["company", id], async () => {
+    const res = await api.get(`/company/${id}`);
+    return res.data;
+  });
 
   const mutation = useMutation({
     mutationFn: async (payload: unknown) => {
+      toast.loading("Updating...");
+      await sleep(1000);
       const res = await api.put(`/company/${id}`, payload);
+      toast.remove();
       return res.data;
     },
-    onSuccess: () => {
-      console.log("Successfully updated");
+    onSuccess: async () => {
       queryClient.invalidateQueries(["companies", "all"]);
       queryClient.invalidateQueries(["companies", "latest3"]);
       queryClient.invalidateQueries(["company", id]);
+      toast.success("Successfully updated, redirecting...");
+      await sleep(1000);
+      toast.remove();
       navigate("/company", { state: { updated: true } });
+    },
+    async onError() {
+      toast.error("Failed to update");
+      await sleep(1000);
+      toast.remove();
     },
   });
 
@@ -40,9 +56,10 @@ const CompanyEdit: React.FC = function () {
 
   return (
     <Layout>
+      <Toaster />
       {isLoading ? (
         <div>
-          <ArrowPathIcon className="animate-spin h-5 w-5 mr-3 ..." />
+          <ArrowPathIcon className="animate-spin h-5 w-5" />
         </div>
       ) : (
         <div className="max-w-lg mx-auto">

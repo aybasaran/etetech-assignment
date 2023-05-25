@@ -26,7 +26,7 @@ const Button: FC<ButtonProps> = ({ text, isLoading, className, ...props }) => {
       {...props}
     >
       {isLoading ? (
-        <ArrowPathIcon className="animate-spin h-5 w-5 mr-3 ..." />
+        <ArrowPathIcon className="animate-spin h-8 w-8 mx-auto" />
       ) : (
         text
       )}

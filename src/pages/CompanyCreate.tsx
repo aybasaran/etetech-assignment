@@ -2,13 +2,12 @@ import React from "react";
 import Layout from "../components/Layout";
 import Button from "../components/Button";
 
-import toast, { Toaster } from "react-hot-toast";
-
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import api from "../api";
 import { useNavigate } from "react-router-dom";
 import sleep from "../utils/sleep";
+import toast, { Toaster } from "react-hot-toast";
 
 const CompanyCreate: React.FC = function () {
   const navigate = useNavigate();
@@ -23,7 +22,7 @@ const CompanyCreate: React.FC = function () {
       return res.data;
     },
     onSuccess: async () => {
-      toast.success("Successfully created, redirecting to company page");
+      toast.success("Successfully created, redirecting...");
       await sleep(1000);
       queryClient.invalidateQueries(["companies", "all"]);
       queryClient.invalidateQueries(["companies", "latest3"]);

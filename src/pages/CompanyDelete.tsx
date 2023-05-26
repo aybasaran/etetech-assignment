@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Layout from "../components/Layout";
 import Button from "../components/Button";
 
@@ -15,9 +15,12 @@ const CompanyDelete: React.FC = function () {
   const { id } = useParams<{ id: string }>();
 
   const { user } = useAuth();
-  if (!user) {
-    navigate("/login");
-  }
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user, navigate]);
 
   const { data, isLoading } = useQuery(["company", id], () =>
     api.get(`/company/${id}`).then((res) => res.data)

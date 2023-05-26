@@ -3,6 +3,7 @@ import { clsx } from "clsx";
 
 import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import { UserIcon } from "@heroicons/react/24/solid";
 
 const Header: React.FC = () => {
   const { user } = useAuth();
@@ -26,6 +27,9 @@ const Header: React.FC = () => {
             </Link>
             <Link to="/product" className={linkStyle}>
               Products
+            </Link>
+            <Link to="/profile">
+              <UserIcon className="w-8 h-8" />
             </Link>
           </div>
         ) : null}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Layout from "../components/Layout";
 
 import { useQuery } from "@tanstack/react-query";
@@ -15,9 +15,12 @@ import useAuth from "../hooks/useAuth";
 const Company: React.FC = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
-  if (!user) {
-    navigate("/login");
-  }
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user, navigate]);
 
   const { data, isLoading } = useQuery(["companies", "all"], async () => {
     const res = await api.get("/company");

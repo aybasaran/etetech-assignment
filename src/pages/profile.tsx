@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import Layout from "../components/Layout";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import api from "../api";
@@ -7,10 +7,20 @@ import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import sleep from "../utils/sleep";
 import Button from "../components/Button";
+import useAuth from "../hooks/useAuth";
 
 const Profile: FC = () => {
   const navigate = useNavigate();
   const quertClient = useQueryClient();
+
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user, navigate]);
+
   const { data, isLoading } = useQuery(["profile"], {
     queryFn: async () => {
       const res = await api.get("/auth/me");

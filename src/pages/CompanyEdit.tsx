@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ArrowPathIcon } from "@heroicons/react/24/solid";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -21,9 +21,11 @@ const CompanyEdit: React.FC = function () {
 
   const { user } = useAuth();
 
-  if (!user) {
-    navigate("/login");
-  }
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user, navigate]);
 
   const { data, isLoading } = useQuery(["company", id], async () => {
     const res = await api.get(`/company/${id}`);

@@ -6,13 +6,16 @@ import {
   updateCompanyByIdHandler,
   createCompanyHandler,
 } from "../controllers/company.controller";
+import { authMiddleware } from "../middlewares/auth.middleware";
+
+authMiddleware;
 
 const router = Router();
 
-router.get("/", listCompaniesHandler);
-router.delete("/:id", deleteCompanyHandler);
-router.get("/:id", getCompanyByIdHandler);
-router.put("/:id", updateCompanyByIdHandler);
-router.post("/", createCompanyHandler);
+router.get("/", authMiddleware, listCompaniesHandler);
+router.delete("/:id", authMiddleware, deleteCompanyHandler);
+router.get("/:id", authMiddleware, getCompanyByIdHandler);
+router.put("/:id", authMiddleware, updateCompanyByIdHandler);
+router.post("/", authMiddleware, createCompanyHandler);
 
 export default router;

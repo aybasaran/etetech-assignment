@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import Button from "../components/Button";
 import { Link, useNavigate } from "react-router-dom";
@@ -10,10 +10,16 @@ import useAuth from "../hooks/useAuth";
 import toast, { Toaster } from "react-hot-toast";
 
 const Login: React.FC = () => {
-  const { user } = useAuth();
-  const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
 
   const loginMutaion = useMutation({
     mutationFn: async () => {
@@ -32,10 +38,6 @@ const Login: React.FC = () => {
       navigate("/");
     },
   });
-
-  if (user) {
-    navigate("/");
-  }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

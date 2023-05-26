@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { IProduct, ICompany } from "../utils/interfaces";
 
@@ -20,9 +20,11 @@ const ProductCreate: React.FC = function () {
   const queryClient = useQueryClient();
   const [company, setCompany] = React.useState<string>("");
 
-  if (!user) {
-    navigate("/login");
-  }
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user, navigate]);
 
   const companyQuery = useQuery(["companies", "all"], async () => {
     const res = await api.get("/company");

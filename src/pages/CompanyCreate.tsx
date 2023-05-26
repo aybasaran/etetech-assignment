@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Layout from "../components/Layout";
 import Button from "../components/Button";
 
@@ -15,9 +15,12 @@ const CompanyCreate: React.FC = function () {
   const queryClient = useQueryClient();
 
   const { user } = useAuth();
-  if (!user) {
-    navigate("/login");
-  }
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user, navigate]);
 
   const mutation = useMutation({
     mutationFn: async (payload: unknown) => {

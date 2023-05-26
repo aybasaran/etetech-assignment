@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { Table, Tooltip } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
@@ -15,9 +15,11 @@ const Product: FC = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  if (!user) {
-    navigate("/login");
-  }
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user, navigate]);
 
   const { data, isLoading } = useQuery(["products", "all"], async () => {
     const res = await api.get("/product");

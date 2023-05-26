@@ -1,38 +1,89 @@
 import React, { useState } from "react";
 import Layout from "../components/Layout";
 import Button from "../components/Button";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";
 import api from "../api";
+import useAuth from "../hooks/useAuth";
+import sleep from "../utils/sleep";
 
 const Register: React.FC = () => {
+  const navigate = useNavigate();
   const [fullName, setFullName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
 
+  const { user } = useAuth();
+
+  if (user) {
+    navigate("/");
+  }
+
   const registerMutation = useMutation({
     mutationFn: async () => {
-      await api.post("/auth/register", {});
+      try {
+        const res = await api.post("/auth/register", {
+          name: fullName,
+          email,
+          password,
+        });
+        return res.data;
+      } catch (error) {
+        toast.error("Failed to register");
+      }
     },
-    onSuccess: () => {
-      console.log("success");
+    onSuccess: async () => {
+      toast.success("Successfully registered");
+      await sleep(1000);
+      navigate("/login");
     },
-    onError: () => {
-      console.log("error");
+    onError: async () => {
+      toast.error("Failed to register");
+      await sleep(1000);
+      toast.remove();
     },
   });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("submit");
+    let errors = 0;
 
-    // registerMutation.mutate();
+    if (!fullName && !email && !password && !confirmPassword) {
+      toast.error("Please fill in all fields");
+      errors++;
+    }
+
+    if (fullName.length < 3) {
+      toast.error("Full name must be at least 3 characters long");
+      errors++;
+    }
+
+    const emailRegex = /\S+@\S+\.\S+/;
+    if (!emailRegex.test(email)) {
+      toast.error("Please enter a valid email");
+      errors++;
+    }
+
+    if (password.length < 6) {
+      toast.error("Password must be at least 6 characters long");
+      errors++;
+    }
+
+    if (password !== confirmPassword) {
+      toast.error("passwords do not match");
+      errors++;
+    }
+
+    if (errors === 0) {
+      registerMutation.mutate();
+    }
   };
 
   return (
     <Layout>
+      <Toaster />
       <div className="w-full h-full flex flex-col gap-4 justify-center items-center">
         <form onSubmit={handleSubmit} className="flex flex-col gap-2">
           <div className="inputGroup">

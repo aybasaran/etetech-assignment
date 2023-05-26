@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Layout from "../components/Layout";
 import Button from "../components/Button";
 
@@ -16,9 +16,11 @@ const ProductDelete: React.FC = function () {
 
   const { user } = useAuth();
 
-  if (!user) {
-    navigate("/login");
-  }
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user, navigate]);
 
   const { data, isLoading } = useQuery(["product", id], () =>
     api.get(`/product/${id}`).then((res) => res.data)

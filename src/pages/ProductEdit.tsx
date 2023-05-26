@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ArrowPathIcon } from "@heroicons/react/24/solid";
 import toast, { Toaster } from "react-hot-toast";
 import { ICompany } from "../utils/interfaces";
@@ -18,9 +18,11 @@ const ProductEdit: React.FC = function () {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  if (!user) {
-    navigate("/login");
-  }
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user, navigate]);
 
   const [company, setCompany] = React.useState<string>(); // [
   const { id } = useParams<{ id: string }>();

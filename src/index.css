@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  font-family: "Poppins", sans-serif;
+}
+
 body {
   @apply bg-slate-200;
 }

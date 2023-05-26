@@ -1,6 +1,7 @@
-import { Space } from "antd";
+import { Space, Tooltip } from "antd";
 import { PencilSquareIcon, XCircleIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
+import { ICompany, IProduct } from "./interfaces";
 
 export const companyColumns = [
   {
@@ -26,14 +27,65 @@ export const companyColumns = [
   {
     title: "Action",
     key: "action",
-    render: (_: any, record: any) => (
+    render: (_: unknown, record: ICompany) => (
       <Space size="middle">
-        <Link to={`/company/${record._id}/edit`}>
-          <PencilSquareIcon width={24} height={24} color="000" />
-        </Link>
-        <Link to={`/company/${record._id}/delete`}>
-          <XCircleIcon width={24} height={24} color="red" />
-        </Link>
+        <Tooltip title="Edit Company">
+          <Link to={`/company/${record._id}/edit`}>
+            <PencilSquareIcon width={24} height={24} color="000" />
+          </Link>
+        </Tooltip>
+        <Tooltip title="Delete Company">
+          <Link to={`/company/${record._id}/delete`}>
+            <XCircleIcon width={24} height={24} color="red" />
+          </Link>
+        </Tooltip>
+      </Space>
+    ),
+  },
+];
+
+export const productColumns = [
+  {
+    title: "Product Name",
+    dataIndex: "product_name",
+    key: "product_name",
+  },
+  {
+    title: "Product Category",
+    dataIndex: "product_category",
+    key: "product_category",
+  },
+  {
+    title: "Product Amount",
+    dataIndex: "product_amount",
+    key: "product_amount",
+  },
+  {
+    title: "Amount Unit",
+    dataIndex: "amount_unit",
+    key: "amount_unit",
+  },
+  {
+    title: "Company",
+    dataIndex: "company",
+    key: "company",
+    render: (company: ICompany) => company.company_name,
+  },
+  {
+    title: "Action",
+    key: "action",
+    render: (_: unknown, record: IProduct) => (
+      <Space size="middle">
+        <Tooltip title="Edit Product">
+          <Link to={`/product/${record._id}/edit`}>
+            <PencilSquareIcon width={24} height={24} color="000" />
+          </Link>
+        </Tooltip>
+        <Tooltip title="Delete Product">
+          <Link to={`/product/${record._id}/delete`}>
+            <XCircleIcon width={24} height={24} color="red" />
+          </Link>
+        </Tooltip>
       </Space>
     ),
   },

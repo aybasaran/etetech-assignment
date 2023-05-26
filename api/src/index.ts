@@ -7,6 +7,7 @@ import { connectToDb } from "./utils/db";
 
 // routes
 import CompanyRouter from "./routes/company.route";
+import ProductRouter from "./routes/product.route";
 
 const app: Express = express();
 
@@ -25,6 +26,7 @@ app.use(morgan(LOGGING_LEVEL));
 app.use(cookieParser());
 
 app.use("/api/company", CompanyRouter);
+app.use("/api/product", ProductRouter);
 
 connectToDb()
   .then(() => {

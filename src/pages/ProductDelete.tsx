@@ -8,33 +8,32 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import api from "../api";
 
-const CompanyDelete: React.FC = function () {
+const ProductDelete: React.FC = function () {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { id } = useParams<{ id: string }>();
 
-  const { data, isLoading } = useQuery(["company", id], () =>
-    api.get(`/company/${id}`).then((res) => res.data)
+  const { data, isLoading } = useQuery(["product", id], () =>
+    api.get(`/product/${id}`).then((res) => res.data)
   );
 
   const mutation = useMutation({
     mutationFn: async () => {
-      const res = await api.delete(`/company/${id}`);
+      const res = await api.delete(`/product/${id}`);
       return res.data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(["companies", "all"]);
-      queryClient.invalidateQueries(["companies", "latest3"]);
+      queryClient.invalidateQueries(["products", "all"]);
     },
   });
 
   const handleYesClick = () => {
     mutation.mutate();
-    navigate("/company", { state: { deleted: true } });
+    navigate("/product", { state: { deleted: true } });
   };
 
   const handleNoClick = () => {
-    navigate("/company", { state: { deleted: false } });
+    navigate("/product", { state: { deleted: false } });
   };
 
   return (
@@ -46,8 +45,8 @@ const CompanyDelete: React.FC = function () {
       ) : (
         <div className="max-w-2xl mx-auto flex flex-col gap-6 h-full justify-center">
           <h1 className="text-2xl">
-            Are you sure you want to delete this company -{" "}
-            <span className="font-bold">({data.company_name})</span> ?
+            Are you sure you want to delete this product -{" "}
+            <span className="font-bold">({data.product_name})</span> ?
           </h1>
           <div className="flex gap-8">
             <Button
@@ -68,4 +67,4 @@ const CompanyDelete: React.FC = function () {
   );
 };
 
-export default CompanyDelete;
+export default ProductDelete;

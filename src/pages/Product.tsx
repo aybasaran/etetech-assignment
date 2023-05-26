@@ -1,19 +1,18 @@
-import React from "react";
+import { FC } from "react";
+import { Table, Tooltip } from "antd";
+import { Link } from "react-router-dom";
+import { PlusCircleIcon } from "@heroicons/react/24/outline";
+
 import Layout from "../components/Layout";
+
+import { productColumns } from "../utils/antdColumns";
 
 import { useQuery } from "@tanstack/react-query";
 import api from "../api";
 
-import { Table, Tooltip } from "antd";
-
-import { companyColumns } from "../utils/antdColumns";
-
-import { Link } from "react-router-dom";
-import { PlusCircleIcon } from "@heroicons/react/24/outline";
-
-const Company: React.FC = () => {
-  const { data, isLoading } = useQuery(["companies", "all"], async () => {
-    const res = await api.get("/company");
+const Product: FC = () => {
+  const { data, isLoading } = useQuery(["products", "all"], async () => {
+    const res = await api.get("/product");
     return res.data;
   });
 
@@ -21,17 +20,17 @@ const Company: React.FC = () => {
     <Layout>
       <div>
         <h1 className="text-lg font-semibold text-purple-600 text-center">
-          Company List
+          Product List
         </h1>
         <div className="flex justify-end">
-          <Tooltip title="Add Company">
-            <Link to="/company/create">
+          <Tooltip title="Add Product">
+            <Link to="/product/create">
               <PlusCircleIcon className="h-10 w-10" />
             </Link>
           </Tooltip>
         </div>
         <Table
-          columns={companyColumns}
+          columns={productColumns}
           dataSource={data}
           loading={isLoading}
           rowKey="_id"
@@ -42,4 +41,4 @@ const Company: React.FC = () => {
   );
 };
 
-export default Company;
+export default Product;

@@ -13,8 +13,10 @@ const Header: React.FC = () => {
   return (
     <header className="py-6">
       <nav className="flex items-center justify-between">
-        <div className="text-2xl font-bold">
-          <Link to="/">EteTechnology</Link>
+        <div className="text-3xl font-bold">
+          <Link to="/" className="underline">
+            EteTechnology
+          </Link>
         </div>
         <div className="flex gap-2 items-center">
           <Link to="/company" className={linkStyle}>

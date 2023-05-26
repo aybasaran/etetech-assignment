@@ -1,3 +1,5 @@
+import "./index.css";
+
 import React from "react";
 import ReactDOM from "react-dom/client";
 
@@ -8,12 +10,17 @@ import CompanyDelete from "./pages/CompanyDelete";
 import CompanyEdit from "./pages/CompanyEdit";
 import Company from "./pages/Company";
 
-import "./index.css";
-
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
+// PAGES
 import CompanyCreate from "./pages/CompanyCreate";
+import Product from "./pages/Product";
+import ProductDelete from "./pages/ProductDelete";
+import ProductEdit from "./pages/ProductEdit";
+import NotFound from "./pages/NotFound";
+import ProductCreate from "./pages/ProductCreate";
 
 const queryClient = new QueryClient();
 
@@ -45,6 +52,26 @@ const router = createBrowserRouter([
   {
     path: "/company/create",
     element: <CompanyCreate />,
+  },
+  {
+    path: "/product",
+    element: <Product />,
+  },
+  {
+    path: "/product/:id/delete",
+    element: <ProductDelete />,
+  },
+  {
+    path: "/product/:id/edit",
+    element: <ProductEdit />,
+  },
+  {
+    path: "/product/create",
+    element: <ProductCreate />,
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ]);
 

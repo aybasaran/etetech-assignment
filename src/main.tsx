@@ -26,6 +26,7 @@ import CompanyEdit from "./pages/CompanyEdit";
 // Auth related
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Profile from "./pages/profile";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
   },
   {
     path: "/company",

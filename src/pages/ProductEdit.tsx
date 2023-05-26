@@ -12,12 +12,19 @@ import { useParams, useNavigate } from "react-router-dom";
 import api from "../api";
 
 import sleep from "../utils/sleep";
+import useAuth from "../hooks/useAuth";
 
 const ProductEdit: React.FC = function () {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  if (!user) {
+    navigate("/login");
+  }
+
   const [company, setCompany] = React.useState<string>(); // [
   const { id } = useParams<{ id: string }>();
 
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery(["product", id], async () => {

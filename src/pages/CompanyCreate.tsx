@@ -8,10 +8,16 @@ import api from "../api";
 import { useNavigate } from "react-router-dom";
 import sleep from "../utils/sleep";
 import toast, { Toaster } from "react-hot-toast";
+import useAuth from "../hooks/useAuth";
 
 const CompanyCreate: React.FC = function () {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+
+  const { user } = useAuth();
+  if (!user) {
+    navigate("/login");
+  }
 
   const mutation = useMutation({
     mutationFn: async (payload: unknown) => {

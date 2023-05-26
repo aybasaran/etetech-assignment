@@ -1,12 +1,17 @@
 import { useState } from "react";
 import Layout from "../components/Layout";
 import Button from "../components/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import api from "../api";
 import sleep from "../utils/sleep";
+import useAuth from "../hooks/useAuth";
+
+import toast, { Toaster } from "react-hot-toast";
 
 const Login: React.FC = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
@@ -16,24 +21,30 @@ const Login: React.FC = () => {
       const res = await api.post("/auth/login", { email, password });
       return res.data;
     },
-    onError: (error: any) => {
-      console.log(error);
+    onError: async () => {
+      toast.error("Failed to login");
+      await sleep(1000);
+      toast.remove();
     },
-    onSuccess: (data: any) => {
-      console.log(data);
+    onSuccess: async () => {
+      toast.success("Successfully logged in");
+      await sleep(1000);
+      navigate("/");
     },
   });
 
+  if (user) {
+    navigate("/");
+  }
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    console.log(email, password);
-
     loginMutaion.mutate();
   };
 
   return (
     <Layout>
+      <Toaster />
       <div className="w-full h-full flex flex-col justify-center items-center gap-4">
         <form onSubmit={handleSubmit} className="flex flex-col gap-2">
           <div className="inputGroup">

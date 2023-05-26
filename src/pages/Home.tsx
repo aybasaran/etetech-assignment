@@ -6,7 +6,16 @@ import { companyColumns } from "../utils/antdColumns";
 import { useQuery } from "@tanstack/react-query";
 import api from "../api";
 
+import useAuth from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
+
 const Home: React.FC = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  if (!user) {
+    navigate("/login");
+  }
+
   const { data, isLoading, error } = useQuery(["companies", "latest3"], () =>
     api.get("/company", { params: { lm: 3, str: -1 } }).then((res) => res.data)
   );

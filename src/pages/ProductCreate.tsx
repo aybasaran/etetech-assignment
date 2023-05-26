@@ -12,11 +12,17 @@ import { useNavigate } from "react-router-dom";
 import api from "../api";
 
 import sleep from "../utils/sleep";
+import useAuth from "../hooks/useAuth";
 
 const ProductCreate: React.FC = function () {
-  const [company, setCompany] = React.useState<string>("");
+  const { user } = useAuth();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const [company, setCompany] = React.useState<string>("");
+
+  if (!user) {
+    navigate("/login");
+  }
 
   const companyQuery = useQuery(["companies", "all"], async () => {
     const res = await api.get("/company");

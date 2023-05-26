@@ -8,10 +8,17 @@ import { Table, Tooltip } from "antd";
 
 import { companyColumns } from "../utils/antdColumns";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import useAuth from "../hooks/useAuth";
 
 const Company: React.FC = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  if (!user) {
+    navigate("/login");
+  }
+
   const { data, isLoading } = useQuery(["companies", "all"], async () => {
     const res = await api.get("/company");
     return res.data;

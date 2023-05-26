@@ -11,12 +11,19 @@ import { useParams, useNavigate } from "react-router-dom";
 import api from "../api";
 
 import sleep from "../utils/sleep";
+import useAuth from "../hooks/useAuth";
 
 const CompanyEdit: React.FC = function () {
   const { id } = useParams<{ id: string }>();
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+
+  const { user } = useAuth();
+
+  if (!user) {
+    navigate("/login");
+  }
 
   const { data, isLoading } = useQuery(["company", id], async () => {
     const res = await api.get(`/company/${id}`);

@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Table, Tooltip } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
 
 import Layout from "../components/Layout";
@@ -9,8 +9,16 @@ import { productColumns } from "../utils/antdColumns";
 
 import { useQuery } from "@tanstack/react-query";
 import api from "../api";
+import useAuth from "../hooks/useAuth";
 
 const Product: FC = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  if (!user) {
+    navigate("/login");
+  }
+
   const { data, isLoading } = useQuery(["products", "all"], async () => {
     const res = await api.get("/product");
     return res.data;

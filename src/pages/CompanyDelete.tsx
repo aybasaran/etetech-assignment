@@ -7,11 +7,17 @@ import { ArrowPathIcon } from "@heroicons/react/24/solid";
 import { useParams, useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import api from "../api";
+import useAuth from "../hooks/useAuth";
 
 const CompanyDelete: React.FC = function () {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { id } = useParams<{ id: string }>();
+
+  const { user } = useAuth();
+  if (!user) {
+    navigate("/login");
+  }
 
   const { data, isLoading } = useQuery(["company", id], () =>
     api.get(`/company/${id}`).then((res) => res.data)

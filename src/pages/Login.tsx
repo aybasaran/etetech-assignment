@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Layout from "../components/Layout";
 import Button from "../components/Button";
+import { Link } from "react-router-dom";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -13,7 +14,7 @@ const Login: React.FC = () => {
 
   return (
     <Layout>
-      <div className="w-full h-full flex justify-center items-center">
+      <div className="w-full h-full flex flex-col justify-center items-center gap-4">
         <form onSubmit={handleSubmit} className="flex flex-col gap-2">
           <div className="inputGroup">
             <label htmlFor="email">Email</label>
@@ -37,6 +38,12 @@ const Login: React.FC = () => {
           </div>
           <Button text="login" className="bg-blue-600 hover:bg-blue-900" />
         </form>
+        <p>
+          Don't have an account?{" "}
+          <Link to="/register" className="underline">
+            Register
+          </Link>
+        </p>
       </div>
     </Layout>
   );

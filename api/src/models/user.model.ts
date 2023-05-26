@@ -1,7 +1,6 @@
 import {
   prop,
   pre,
-  getModelForClass,
   modelOptions,
   Severity,
   DocumentType,
@@ -46,5 +45,3 @@ export class User {
     }
   }
 }
-
-export const UserModel = getModelForClass(User);

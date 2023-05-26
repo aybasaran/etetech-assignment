@@ -18,14 +18,16 @@ const Header: React.FC = () => {
             EteTechnology
           </Link>
         </div>
-        <div className="flex gap-2 items-center">
-          <Link to="/company" className={linkStyle}>
-            Companies
-          </Link>
-          <Link to="/product" className={linkStyle}>
-            Products
-          </Link>
-        </div>
+        {isAuthenticated ? (
+          <div className="flex gap-2 items-center">
+            <Link to="/company" className={linkStyle}>
+              Companies
+            </Link>
+            <Link to="/product" className={linkStyle}>
+              Products
+            </Link>
+          </div>
+        ) : null}
       </nav>
     </header>
   );

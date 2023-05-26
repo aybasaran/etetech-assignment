@@ -8,6 +8,7 @@ import { connectToDb } from "./utils/db";
 // routes
 import CompanyRouter from "./routes/company.route";
 import ProductRouter from "./routes/product.route";
+import UserRouter from "./routes/user.route";
 
 const app: Express = express();
 
@@ -27,6 +28,7 @@ app.use(cookieParser());
 
 app.use("/api/company", CompanyRouter);
 app.use("/api/product", ProductRouter);
+app.use("/api/auth", UserRouter);
 
 connectToDb()
   .then(() => {

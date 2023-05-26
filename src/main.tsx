@@ -3,24 +3,29 @@ import "./index.css";
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import CompanyDelete from "./pages/CompanyDelete";
-import CompanyEdit from "./pages/CompanyEdit";
-import Company from "./pages/Company";
-
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 // PAGES
-import CompanyCreate from "./pages/CompanyCreate";
+import Home from "./pages/Home";
+import NotFound from "./pages/NotFound";
+
+// Product
 import Product from "./pages/Product";
 import ProductDelete from "./pages/ProductDelete";
 import ProductEdit from "./pages/ProductEdit";
-import NotFound from "./pages/NotFound";
 import ProductCreate from "./pages/ProductCreate";
+
+// Company
+import Company from "./pages/Company";
+import CompanyCreate from "./pages/CompanyCreate";
+import CompanyDelete from "./pages/CompanyDelete";
+import CompanyEdit from "./pages/CompanyEdit";
+
+// Auth related
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 const queryClient = new QueryClient();
 
